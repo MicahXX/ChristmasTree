@@ -14,6 +14,7 @@ public class Tree {
         final String BLUE = "\u001B[34m";
         final String MAGENTA = "\u001B[35m";
         final String CYAN = "\u001B[36m";
+        final String GOLD = "\u001B[93m";
 
         String title = "Christmas Tree";
         String[] colors = {RED, YELLOW, BLUE, MAGENTA, CYAN};
@@ -33,7 +34,10 @@ public class Tree {
             for (int h = height; h > j; h--) {
                 System.out.print(" ");
             }
-
+            if (j == 1) {
+                System.out.println(GOLD + "*" + RESET);
+                continue;
+            }
             for (int i = 1; i <= (2 * j - 1); i++) {
                 if (random.nextInt(4) == 0) {
                     String randomColor = colors[random.nextInt(colors.length)];
@@ -45,9 +49,24 @@ public class Tree {
             System.out.println();
         }
 
-        for (int h = 1; h < height; h++) {
-            System.out.print(" ");
+        int trunkHeight;
+        int trunkWidth;
+        if (height < 7) {
+            trunkHeight = 1;
+            trunkWidth = 1;
+        } else {
+            trunkHeight = Math.max(2, height / 5);
+            trunkWidth = Math.max(3, height / 6);
+            if (trunkWidth % 2 == 0) trunkWidth++;
         }
-        System.out.println(BROWN + "|" + RESET);
+
+        int spaces = height - (trunkWidth / 2) - 1;
+
+        for (int t = 0; t < trunkHeight; t++) {
+            for (int s = 0; s < spaces; s++) {
+                System.out.print(" ");
+            }
+            System.out.println(BROWN + "|".repeat(trunkWidth) + RESET);
+        }
     }
 }
